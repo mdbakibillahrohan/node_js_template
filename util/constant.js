@@ -3,7 +3,9 @@ module.exports = {
         API_CONTEXT: '/api/v1/',
 
         LOGIN: "login",
-        REGISTER: "register"
+        REGISTER: "register",
+
+        STUDENT_LIST: "get-student-list"
     },
 
     TABLE: {

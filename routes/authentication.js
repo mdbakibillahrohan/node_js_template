@@ -5,6 +5,6 @@ const registerController = require('../controllers/authentication/register_contr
 const { API } = require('../util/constant');
 
 
-authenticationRouter.get(API.API_CONTEXT + API.LOGIN, loginController);
+authenticationRouter.post(API.API_CONTEXT + API.LOGIN, loginController);
 authenticationRouter.post(API.API_CONTEXT + API.REGISTER, registerController);
 module.exports = authenticationRouter;
