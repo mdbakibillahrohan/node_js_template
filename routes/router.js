@@ -5,5 +5,4 @@ const authenticationRouter = require('./authentication');
 const studentRouter = require('./student');
 appRouter.use(authenticationRouter);
 appRouter.use(studentRouter);
-
 module.exports = appRouter;

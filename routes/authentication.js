@@ -7,4 +7,5 @@ const { API } = require('../util/constant');
 
 authenticationRouter.post(API.API_CONTEXT + API.LOGIN, loginController);
 authenticationRouter.post(API.API_CONTEXT + API.REGISTER, registerController);
+
 module.exports = authenticationRouter;

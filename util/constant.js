@@ -5,10 +5,14 @@ module.exports = {
         LOGIN: "login",
         REGISTER: "register",
 
-        STUDENT_LIST: "get-student-list"
+        STUDENT_LIST: "student/list",
+        CREATE_STUDENT: "student/create",
+        UPDATE_STUDENT: "student/update",
+        DELETE_STUDENT: "student/delete",
     },
 
     TABLE: {
         USERS: 'users',
+        STUDENT: "students",
     }
 }
