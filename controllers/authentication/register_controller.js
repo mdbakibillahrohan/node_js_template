@@ -1,6 +1,7 @@
 const dao = require('../../util/dao');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
+const { TABLE } = require('../../util/constant');
 
 const schema = Joi.object().keys({
     name: Joi.string().alphanum().min(3).max(50).required(),
@@ -14,7 +15,6 @@ const registerController = async (req, res) => {
     if (isValidate.error) {
         return res.status(400).json({ error: isValidate.error })
     }
-
     try {
         const isDuplicate = await duplicateEntryCheck(req);
         if (isDuplicate) {
@@ -22,7 +22,6 @@ const registerController = async (req, res) => {
         }
         const register = await registerUser(req);
         if (register.rowCount > 0) {
-
             return res.status(200).json({ message: "Registration successful" });
         } else {
             res.status(401).send("Something went wrong");
@@ -40,7 +39,7 @@ const registerUser = async (req) => {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
         sql = {
-            text: "INSERT INTO users(name, username, email, password) VALUES($1, $2, $3, $4)",
+            text: `INSERT INTO ${TABLE.USERS}(name, username, email, password) VALUES($1, $2, $3, $4)`,
             values: [name, username, email, hashedPassword]
         }
         const register = await dao.execute_value(sql);
@@ -56,7 +55,7 @@ const duplicateEntryCheck = async (req) => {
 
     try {
         sql = {
-            text: "select * from users where email = $1 or username = $2",
+            text: `select * from ${TABLE.USERS} where email = $1 or username = $2`,
             values: [email, username]
         }
         const data = await dao.get_data(sql);
@@ -67,18 +66,6 @@ const duplicateEntryCheck = async (req) => {
 }
 
 
-const generateToken = async (req) => {
-    const { email } = req.body;
-    try {
-        sql = {
-            text: "select name, email, role from users where email = $1",
-            values: [email]
-        }
-        const data = await dao.get_data(sql);
-        console
-    } catch (error) {
-        throw error;
-    }
-}
+
 
 module.exports = registerController;

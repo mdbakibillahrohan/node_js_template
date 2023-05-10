@@ -2,6 +2,7 @@ const dao = require('../../util/dao')
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { TABLE } = require('../../util/constant');
 
 const schema = Joi.object().keys({
     email: Joi.string().email().required(),
@@ -17,7 +18,7 @@ const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
         sql = {
-            text: "select * from users where email = $1",
+            text: `select * from ${TABLE.USERS} where email = $1`,
             values: [email]
         }
         data = await dao.get_data(sql);
@@ -38,11 +39,8 @@ const loginController = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).send("Internal server error")
+        return res.status(500).send("Internal server error")
     }
-    res.json({
-        data: data
-    })
 }
 
 

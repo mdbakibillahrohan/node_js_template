@@ -32,10 +32,4 @@ const deleteStudent = async (req) => {
     }
 }
 
-
-
-
-
-
-
 module.exports = deleteStudentApi;
